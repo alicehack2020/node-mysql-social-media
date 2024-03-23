@@ -32,5 +32,27 @@ export const register = (req, res) => {
     });
   });
 };
-export const login = (req, res) => {};
+export const login = (req, res) => {
+  const q = "SELECT * FROM users WHERE username=?";
+  const { username, password } = req.body;
+
+  db.query(q, username, (err, result) => {
+    if (err) {
+      res.status(500).json({ message: err.message });
+      return;
+    }
+    if(result.length === 0){
+      res.status(400).json({message: "User not found"});
+      return;
+    }
+ 
+    const checkPassword = bcrypt.compareSync(password, result[0].password);
+    if(!checkPassword){
+      res.status(400).json({message: "Wrong password or username"});
+      return;
+    }
+
+
+  });
+};
 export const logout = (req, res) => {};
