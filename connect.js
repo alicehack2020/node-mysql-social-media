@@ -6,8 +6,6 @@ const user = process.env.user;
 const password = process.env.password;
 const database = process.env.database;
 
-console.log(database);
-
 export const db = mysql.createConnection({
   host: host,
   user: user,
@@ -17,5 +15,5 @@ export const db = mysql.createConnection({
 
 db.connect(function (err) {
   if (err) throw err;
-  console.log("Connected!");
+  console.log("Database Connected!");
 });
